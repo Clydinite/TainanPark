@@ -10,8 +10,8 @@ import {
 import { ThemeProvider } from "./components/theme-provider";
 import { useState } from "react";
 
-import Buy from "./pages/Buy";
-import Sell from "./pages/Sell";
+import Activities from "./pages/Activities";
+import Host from "./pages/Host";
 import Welcome from "./pages/Welcome";
 import Login from "./pages/Login";
 
@@ -24,8 +24,8 @@ function Nav() {
 
   const navItems = [
     { path: "/", label: "Home" },
-    { path: "/buy", label: "Buy" },
-    { path: "/sell", label: "Sell" },
+    { path: "/activities", label: "Activities" },
+    { path: "/host", label: "Host" },
   ];
 
   const getNavClass = (path: string) =>
@@ -42,9 +42,9 @@ function Nav() {
           to="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <img src="/book.svg" className="h-8" alt="Logo" />
+          <img src="/vite.svg" className="h-8" alt="Logo" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-            NCKU Book Exchange
+            Tainan Park Activities
           </span>
         </Link>
         <button
@@ -119,8 +119,8 @@ export default function App() {
           {/* MAIN CONTENT */}
           <Routes>
             <Route path="/" element={<Welcome />} />
-            <Route path="/buy" element={<Buy />} />
-            <Route path="/sell" element={<Sell />} />
+            <Route path="/activities" element={<Activities />} />
+            <Route path="/host" element={<Host />} />
             <Route path="/login" element={<Login />} />
           </Routes>
         </div>
@@ -128,3 +128,4 @@ export default function App() {
     </Router>
   );
 }
+

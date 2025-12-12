@@ -6,44 +6,59 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { AnimatePresence, motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { books } from "./fakebooks";
+import { activities } from "./fakeActivities";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 
-const conditions = [
-  "Brand New",
-  "Like New",
-  "Used – Clean",
-  "Used – With Notes",
-  "Heavily Used",
+const tags = [
+  "Relaxing",
+  "Health",
+  "Morning",
+  "Sports",
+  "Intense",
+  "Afternoon",
+  "Educational",
+  "Walking",
+  "Family",
+  "All Day",
+  "Nature",
+  "Evening",
 ];
 
-function BookCard({ book }: { book: Book }) {
+function ActivityCard({ activity }: { activity: Activity }) {
   return (
     <Card className="group hover:scale-[1.02] transition-transform overflow-hidden p-5 border border-white/10 bg-white/5 backdrop-blur-md rounded-2xl shadow-xl flex flex-row gap-4 sm:items-center">
       <img
-        src={book.image}
-        alt={book.title}
+        src={activity.image}
+        alt={activity.name}
         className="w-32 h-48 object-cover rounded-xl shadow-inner"
       />
       <CardContent className="flex-1 space-y-2">
         <div className="font-semibold text-md md:text-lg text-white">
-          {book.title}
+          {activity.name}
         </div>
-        <div className="text-sm text-gray-400">
-          <span className="text-white/80">Course ID:</span> {book.courseId}
+        <div className="text-sm text-gray-400 flex flex-wrap gap-2">
+          {activity.tags.map((tag) => (
+            <span
+              key={tag}
+              className="bg-gray-700 text-gray-300 px-2 py-1 rounded-md text-xs"
+            >
+              {tag}
+            </span>
+          ))}
         </div>
-        <div className="text-sm text-gray-400">
-          <span className="text-white/80">ISBN:</span> {book.isbn}
+        <div className="text-sm text-yellow-300">
+          Activity Level: {activity.activityLevel}/5
         </div>
-        <div className="text-sm text-yellow-300">{book.condition}</div>
-        <div className="text-xl font-bold text-green-400">${book.price} NTD</div>
-        <DrawerDialog book={book} />
+        <div className="text-xl font-bold text-green-400">
+          {activity.schedule}
+        </div>
+        <ActivityDetails activity={activity} />
       </CardContent>
     </Card>
   );
 }
-function DrawerDialog({ book }: { book: Book }) {
+function ActivityDetails({ activity }: { activity: Activity }) {
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
@@ -61,8 +76,8 @@ function DrawerDialog({ book }: { book: Book }) {
     <div className={`p-5 flex gap-6 ${isDesktop ? "flex-row" : "flex-col"}`}>
       {/* Image */}
       <img
-        src={book.image}
-        alt={book.title}
+        src={activity.image}
+        alt={activity.name}
         className={`rounded-xl shadow-inner object-cover ${
           isDesktop ? "w-48 h-72" : "w-36 h-48 mx-auto"
         }`}
@@ -71,48 +86,42 @@ function DrawerDialog({ book }: { book: Book }) {
       {/* Details */}
       <div className="flex-1 space-y-3">
         <div className="font-semibold text-xl md:text-2xl text-white">
-          {book.title}
+          {activity.name}
         </div>
 
         <div className="text-sm text-gray-400">
-          <span className="text-white/80">Course ID:</span> {book.courseId}
+          <span className="text-white/80">Tags:</span> {activity.tags.join(", ")}
         </div>
         <div className="text-sm text-gray-400">
-          <span className="text-white/80">ISBN:</span> {book.isbn}
+          <span className="text-white/80">Activity Level:</span>{" "}
+          {activity.activityLevel}/5
         </div>
         <div className="text-sm text-gray-400">
-          <span className="text-white/80">Condition:</span> {book.condition}
+          <span className="text-white/80">Host Email:</span> {activity.hostEmail}
         </div>
         <div className="text-sm text-gray-400">
-          <span className="text-white/80">Seller Email:</span>{" "}
-          {book.sellerEmail}@gs.ncku.edu.tw
+          <span className="text-white/80">Schedule:</span> {activity.schedule}
         </div>
         <div className="text-sm text-gray-400">
-          <span className="text-white/80">Seller Available Time:</span>{" "}
-          {book.avaliableTime}
-        </div>
-        <div className="text-sm text-gray-400">
-          <span className="text-white/80">Description:</span> {book.description}
-        </div>
-        <div className="text-xl font-bold text-green-400">
-          <span className="text-white/80">Price:</span> ${book.price} NTD
+          <span className="text-white/80">Description:</span>{" "}
+          {activity.description}
         </div>
         <div className="mt-5 mb-20 md:mb-0">
           <Button
             variant="default"
             className="w-full"
             onClick={() => {
-              const email = `${book.sellerEmail}@gs.ncku.edu.tw`;
+              const email = activity.hostEmail;
               const subject = encodeURIComponent(
-                `Inquiry about "${book.title}"`
+                `Inquiry about "${activity.name}"`
               );
               const body = encodeURIComponent(
-                `Hi,\n\nI'm interested in buying your "${book.title}" (ISBN: ${book.isbn}) textbook. Would you be available to meet at [LOCATION] on [DATE]?\n\nThanks for your time.`
+                `Hi,\n\nI'm interested in joining your "${activity.name}" activity.\n\nThanks for your time.`
               );
               window.open(`mailto:${email}?subject=${subject}&body=${body}`);
             }}
           >
-            Send Email to Seller
+            Contact Host
           </Button>
         </div>
       </div>
@@ -138,32 +147,23 @@ function DrawerDialog({ book }: { book: Book }) {
   }
 }
 
-export default function TextbookExchange() {
+export default function ActivitiesPage() {
   const [search, setSearch] = useState("");
-  const [priceRange, setPriceRange] = useState([0, 1000]);
-  const [selectedCondition, setSelectedCondition] = useState<string[]>([
-    "Brand New",
-    "Like New",
-    "Used – Clean",
-    "Used – With Notes",
-    "Heavily Used",
-  ]);
+  const [activityLevel, setActivityLevel] = useState([1, 5]);
+  const [selectedTags, setSelectedTags] = useState<string[]>(tags);
 
-  const filteredBooks = books.filter((book) => {
-    const titleMatch = book.title.toLowerCase().includes(search.toLowerCase());
-    const isbnMatch = book.isbn.includes(search);
-    const courseMatch = book.courseId
+  const filteredActivities = activities.filter((activity) => {
+    const nameMatch = activity.name
       .toLowerCase()
       .includes(search.toLowerCase());
-    const priceMatch =
-      book.price >= priceRange[0] && book.price <= priceRange[1];
-    const conditionMatch = selectedCondition.some((condition) => {
-      return book.condition === condition;
-    });
+    const levelMatch =
+      activity.activityLevel >= activityLevel[0] &&
+      activity.activityLevel <= activityLevel[1];
+    const tagsMatch =
+      selectedTags.length === 0 ||
+      selectedTags.some((tag) => activity.tags.includes(tag));
 
-    return (
-      (titleMatch || isbnMatch || courseMatch) && priceMatch && conditionMatch
-    );
+    return nameMatch && levelMatch && tagsMatch;
   });
 
   return (
@@ -177,52 +177,52 @@ export default function TextbookExchange() {
         >
           <div>
             <h1 className="text-4xl md:text-5xl font-extrabold drop-shadow-md">
-              Buy a Textbook
+              Find an Activity
             </h1>
             <p className="text-muted-foreground text-lg mt-4 mb-6">
-              Trade books with students, by students.
+              Discover and join activities happening in Tainan Park.
             </p>
           </div>
 
-          {/* SEARCH & FILTERS + BOOK CARDS */}
+          {/* SEARCH & FILTERS + ACTIVITY CARDS */}
           <div className="flex flex-col gap-6 mb-6">
             {/* SIDEBAR: SEARCH & FILTERS */}
             <div className="space-y-4 select-none sticky top-16">
               <Input
-                placeholder="Search by title, course ID or ISBN"
+                placeholder="Search by activity name..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="rounded-xl shadow-md"
               />
               <div className="flex flex-col">
                 <label className="text-muted-foreground my-2">
-                  Price: ${priceRange[0]} ~ ${priceRange[1]} NTD
+                  Activity Level: {activityLevel[0]} - {activityLevel[1]}
                 </label>
                 <Slider
-                  min={0}
-                  max={2000}
-                  step={50}
-                  value={priceRange}
-                  onValueChange={setPriceRange}
+                  min={1}
+                  max={5}
+                  step={1}
+                  value={activityLevel}
+                  onValueChange={setActivityLevel}
                 />
               </div>
               <div className="space-y-2">
-                {conditions.map((condition) => (
+                {tags.map((tag) => (
                   <label
-                    key={condition}
+                    key={tag}
                     className="flex items-center space-x-2 text-muted-foreground"
                   >
                     <Checkbox
-                      checked={selectedCondition.includes(condition)}
+                      checked={selectedTags.includes(tag)}
                       onCheckedChange={(checked) =>
-                        setSelectedCondition(
+                        setSelectedTags(
                           checked
-                            ? [...selectedCondition, condition]
-                            : selectedCondition.filter((c) => c !== condition)
+                            ? [...selectedTags, tag]
+                            : selectedTags.filter((t) => t !== tag)
                         )
                       }
                     />
-                    <span>{condition}</span>
+                    <span>{tag}</span>
                   </label>
                 ))}
               </div>
@@ -230,12 +230,12 @@ export default function TextbookExchange() {
           </div>
         </motion.div>
 
-        {/* BOOK CARDS */}
+        {/* ACTIVITY CARDS */}
         <div className="grid gap-6 grid-cols-1 lg:grid-cols-2">
           <AnimatePresence mode="popLayout">
-            {filteredBooks.length > 0 ? (
-              filteredBooks.map((book, idx) => (
-                <motion.div key={book.id ?? idx} layout>
+            {filteredActivities.length > 0 ? (
+              filteredActivities.map((activity, idx) => (
+                <motion.div key={activity.id ?? idx} layout>
                   <motion.div
                     layout
                     initial={{ opacity: 0, y: 10 }}
@@ -243,7 +243,7 @@ export default function TextbookExchange() {
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <BookCard book={book} />
+                    <ActivityCard activity={activity} />
                   </motion.div>
                 </motion.div>
               ))
@@ -254,7 +254,7 @@ export default function TextbookExchange() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
               >
-                No books fit the search criteria.
+                No activities fit the search criteria.
               </motion.p>
             )}
           </AnimatePresence>
@@ -263,3 +263,4 @@ export default function TextbookExchange() {
     </>
   );
 }
+

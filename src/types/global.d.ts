@@ -1,13 +1,12 @@
-type Book = {
+type Activity = {
   id: number;
-  title: string;
-  isbn: string;
-  courseId: string;
-  condition: string;
-  price: number;
+  name: string;
+  tags: string[];
+  activityLevel: number;
   image: string;
-  sellerEmail: string;
+  hostEmail: string;
   description: string;
-  avaliableTime: string;
+  schedule: string;
 };
+
 
