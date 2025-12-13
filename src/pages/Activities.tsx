@@ -18,17 +18,17 @@ const dateFilters = [
 ];
 
 function FilterPillGroup({ title, children }: { title: string, children: React.ReactNode }) {
-    return (
-        <div className="flex flex-col">
-            <label className="text-muted-foreground my-2">{title}</label>
-            <ScrollArea className="w-full">
-                <div className="flex space-x-2">
-                    {children}
-                </div>
-                <ScrollBar orientation="horizontal" />
-            </ScrollArea>
+  return (
+    <div className="flex flex-col">
+      <label className="text-muted-foreground my-2">{title}</label>
+      <ScrollArea className="w-full">
+        <div className="flex space-x-2">
+          {children}
         </div>
-    )
+        <ScrollBar orientation="horizontal" />
+      </ScrollArea>
+    </div>
+  )
 }
 
 export default function ActivitiesPage() {
@@ -46,46 +46,46 @@ export default function ActivitiesPage() {
     const tagsMatch =
       selectedTags.length === 0 ||
       selectedTags.every((tag) => activityTags.includes(tag));
-    
+
     const groupSizeMatch = (() => {
-        if (!activity.groupSize) return true; // If activity has no size limit, it matches
-        const [minFilter, maxFilter] = groupSize;
-        // Check for overlap
-        return Math.max(minFilter, activity.groupSize.min) <= Math.min(maxFilter, activity.groupSize.max);
+      if (!activity.groupSize) return true; // If activity has no size limit, it matches
+      const [minFilter, maxFilter] = groupSize;
+      // Check for overlap
+      return Math.max(minFilter, activity.groupSize.min) <= Math.min(maxFilter, activity.groupSize.max);
     })();
 
     const dateMatch = (() => {
-        if (selectedDateFilter === 'all') return true;
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        const activityDate = new Date(activity.schedule.date);
-        if (selectedDateFilter === 'today') {
-            return activityDate.getTime() === today.getTime();
-        }
-        if (selectedDateFilter === 'tomorrow') {
-            const tomorrow = new Date(today);
-            tomorrow.setDate(today.getDate() + 1);
-            return activityDate.getTime() === tomorrow.getTime();
-        }
-        if (selectedDateFilter === 'weekend') {
-            const dayOfWeek = today.getDay(); // 0=Sun, 6=Sat
-            const saturday = new Date(today);
-            saturday.setDate(today.getDate() + (6 - dayOfWeek) % 7);
-            const sunday = new Date(saturday);
-            sunday.setDate(saturday.getDate() + 1);
-            return activityDate.getTime() === saturday.getTime() || activityDate.getTime() === sunday.getTime();
-        }
-        if (selectedDateFilter === 'next7days') {
-            const next7days = new Date(today);
-            next7days.setDate(today.getDate() + 7);
-            return activityDate >= today && activityDate < next7days;
-        }
-        return true;
+      if (selectedDateFilter === 'all') return true;
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const activityDate = new Date(activity.schedule.date);
+      if (selectedDateFilter === 'today') {
+        return activityDate.getTime() === today.getTime();
+      }
+      if (selectedDateFilter === 'tomorrow') {
+        const tomorrow = new Date(today);
+        tomorrow.setDate(today.getDate() + 1);
+        return activityDate.getTime() === tomorrow.getTime();
+      }
+      if (selectedDateFilter === 'weekend') {
+        const dayOfWeek = today.getDay(); // 0=Sun, 6=Sat
+        const saturday = new Date(today);
+        saturday.setDate(today.getDate() + (6 - dayOfWeek) % 7);
+        const sunday = new Date(saturday);
+        sunday.setDate(saturday.getDate() + 1);
+        return activityDate.getTime() === saturday.getTime() || activityDate.getTime() === sunday.getTime();
+      }
+      if (selectedDateFilter === 'next7days') {
+        const next7days = new Date(today);
+        next7days.setDate(today.getDate() + 7);
+        return activityDate >= today && activityDate < next7days;
+      }
+      return true;
     })();
 
     return nameMatch && levelMatch && tagsMatch && dateMatch && groupSizeMatch;
   });
-  
+
   const handleTagClick = (tag: string) => {
     setSelectedTags((prev) =>
       prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
@@ -105,7 +105,7 @@ export default function ActivitiesPage() {
               探索活動
             </h1>
             <p className="text-muted-foreground text-lg mt-4 mb-6">
-              在台南公園，發現或發起一個無壓力的活動吧！
+              在台南公園，找到一個你喜歡的活動吧！
             </p>
           </div>
 
@@ -117,9 +117,9 @@ export default function ActivitiesPage() {
                 onChange={(e) => setSearch(e.target.value)}
                 className="rounded-xl shadow-md"
               />
-              
+
               <div className="flex flex-col">
-                <label className="text-muted-foreground my-4">
+                <label className="text-muted-foreground mb-4">
                   社交強度: {socialLevelDescriptions.get(socialLevel[0])} - {socialLevelDescriptions.get(socialLevel[1])}
                 </label>
                 <Slider
@@ -131,27 +131,8 @@ export default function ActivitiesPage() {
                 />
               </div>
 
-                <FilterPillGroup title="時間">
-                    {dateFilters.map(filter => (
-                         <Button key={filter.id} variant={selectedDateFilter === filter.id ? "default" : "outline"} className="rounded-full whitespace-nowrap" onClick={() => setSelectedDateFilter(filter.id)}>{filter.label}</Button>
-                    ))}
-                </FilterPillGroup>
-                
-                <FilterPillGroup title="標籤">
-                    {allTags.map((tag) => (
-                      <Button
-                        key={tag}
-                        variant={selectedTags.includes(tag) ? "default" : "outline"}
-                        className="rounded-full whitespace-nowrap"
-                        onClick={() => handleTagClick(tag)}
-                      >
-                        #{tag}
-                      </Button>
-                    ))}
-                </FilterPillGroup>
-                
               <div className="flex flex-col">
-                <label className="text-muted-foreground my-4">
+                <label className="text-muted-foreground mb-4">
                   人數: {groupSize[0]} - {groupSize[1]} 人
                 </label>
                 <Slider
@@ -162,6 +143,26 @@ export default function ActivitiesPage() {
                   onValueChange={setGroupSize}
                 />
               </div>
+
+              <FilterPillGroup title="時間">
+                {dateFilters.map(filter => (
+                  <Button key={filter.id} variant={selectedDateFilter === filter.id ? "default" : "outline"} className="rounded-full whitespace-nowrap" onClick={() => setSelectedDateFilter(filter.id)}>{filter.label}</Button>
+                ))}
+              </FilterPillGroup>
+
+              <FilterPillGroup title="標籤">
+                {allTags.map((tag) => (
+                  <Button
+                    key={tag}
+                    variant={selectedTags.includes(tag) ? "default" : "outline"}
+                    className="rounded-full whitespace-nowrap"
+                    onClick={() => handleTagClick(tag)}
+                  >
+                    #{tag}
+                  </Button>
+                ))}
+              </FilterPillGroup>
+
 
             </div>
           </div>
