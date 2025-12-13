@@ -3,7 +3,7 @@
  */
 export type Activity = {
   /** 活動 ID */
-  id: number;
+  id: string;
 
   /**
    * 活動名稱（強調 vibe，不是專業或正式標題）
@@ -90,4 +90,15 @@ export type Activity = {
    * 活動說明（短、溫柔、低壓的文案）
    */
   description: string;
+
+  /**
+   * 留言區
+   */
+  comments?: Comment[];
+};
+
+export type Comment = {
+  handle: string;
+  avatar?: string;
+  text: string;
 };

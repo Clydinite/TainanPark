@@ -48,6 +48,15 @@ export function ActivityCard({ activity }: { activity: Activity }) {
               #{v}
             </span>
           ))}
+
+          {activity.interests.map((interest) => (
+            <span
+              key={interest}
+              className="bg-gray-700/50 text-gray-300 px-2 py-0.5 rounded-md text-xs"
+            >
+              #{interest}
+            </span>
+          ))}
         </div>
         
         {/* New Footer Section */}
@@ -148,7 +157,12 @@ export function ActivityDetails({ activity }: { activity: Activity }) {
                     <AvatarFallback>{comment.handle.slice(0, 1)}</AvatarFallback>
                   </Avatar>
                   <div>
-                    <p className="text-sm font-semibold text-white">{comment.handle}</p>
+                    <p className="text-sm font-semibold text-white">
+                        {comment.handle}
+                        {comment.handle === activity.host.nickname && (
+                            <span className="ml-2 text-xs text-blue-300">(主揪)</span>
+                        )}
+                    </p>
                     <p className="text-sm text-gray-300">{comment.text}</p>
                   </div>
                 </div>
