@@ -15,6 +15,7 @@ export default function HostActivityPage() {
   const [activityLevel, setActivityLevel] = useState(3);
   const [imageUrl, setImageUrl] = useState("");
   const [schedule, setSchedule] = useState("");
+  const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
 
   const handleTagClick = (tag: string) => {
@@ -125,7 +126,17 @@ export default function HostActivityPage() {
             <Input
               value={schedule}
               onChange={(e) => setSchedule(e.target.value)}
-              placeholder="例如：每週六上午 8:00"
+              placeholder="例如：12/27 星期六上午 8:00"
+              className="mt-1"
+            />
+          </div>
+
+          <div>
+            <Label className="m-2">活動地點</Label>
+            <Input
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              placeholder="例如：台南公園燕湖"
               className="mt-1"
             />
           </div>
