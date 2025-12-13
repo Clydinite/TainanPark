@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { allTags } from "@/lib/tags";
 
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
@@ -10,16 +11,22 @@ import { Label } from "@/components/ui/label";
 
 export default function HostActivityPage() {
   const [name, setName] = useState("");
-  const [tags, setTags] = useState("");
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [activityLevel, setActivityLevel] = useState(3);
   const [imageUrl, setImageUrl] = useState("");
   const [schedule, setSchedule] = useState("");
   const [description, setDescription] = useState("");
 
+  const handleTagClick = (tag: string) => {
+    setSelectedTags((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+    );
+  };
+
   const handleSubmit = () => {
     const activityData = {
       name,
-      tags: tags.split(",").map((tag) => tag.trim()),
+      tags: selectedTags,
       activityLevel,
       image: imageUrl,
       schedule,
@@ -29,7 +36,7 @@ export default function HostActivityPage() {
     console.log("Submitted activity:", activityData);
     // Replace this with your real submission logic
     alert(
-      "😅 This is a demo. Submitting activities to the database is not actually implemented."
+      "😅 這是示範功能。活動提交尚未實作。"
     );
   };
 
@@ -64,13 +71,19 @@ export default function HostActivityPage() {
           </div>
 
           <div>
-            <Label className="m-2">標籤</Label>
-            <Input
-              value={tags}
-              onChange={(e) => setTags(e.target.value)}
-              placeholder="例如：輕鬆、運動、高強度"
-              className="mt-1"
-            />
+            <Label className="m-2">標籤 (可選多個)</Label>
+            <div className="flex gap-2 mt-2">
+              {allTags.map((tag) => (
+                <Button
+                  key={tag}
+                  variant={selectedTags.includes(tag) ? "default" : "outline"}
+                  className="rounded-full whitespace-nowrap"
+                  onClick={() => handleTagClick(tag)}
+                >
+                  #{tag}
+                </Button>
+              ))}
+            </div>
           </div>
 
           <div className="flex flex-col">
