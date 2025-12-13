@@ -57,7 +57,7 @@ export const mockActivities: Activity[] = [
     vibe: ["輕鬆", "安靜"],
     socialLevel: 1,
     interests: ["閱讀", "野餐"],
-    images: ["https://picsum.photos/200/300"],
+    images: ["https://picsum.photos/seed/picsum/200/300"],
     host: { nickname: "leafreader" },
     location: {
       name: "台南公園 - 心型花圃旁",
@@ -73,7 +73,7 @@ export const mockActivities: Activity[] = [
     vibe: ["輕鬆", "小群體"],
     socialLevel: 2,
     interests: ["手機攝影", "自然"],
-    images: ["https://picsum.photos/200/300"],
+    images: ["https://picsum.photos/seed/forest/200/300"],
     host: { nickname: "buglens" },
     location: {
       name: "台南公園 - 水池邊樹叢",
@@ -90,7 +90,7 @@ export const mockActivities: Activity[] = [
     vibe: ["chill", "溫柔"],
     socialLevel: 1,
     interests: ["交朋友"],
-    images: ["https://picsum.photos/200/300"],
+    images: ["https://picsum.photos/seed/city/200/300"],
     host: { nickname: "softshell" },
     location: {
       name: "台南公園 - 圓形廣場角落",
@@ -107,7 +107,7 @@ export const mockActivities: Activity[] = [
     vibe: ["安靜", "自然"],
     socialLevel: 0,
     interests: ["散步", "觀察自然"],
-    images: ["https://picsum.photos/200/300"],
+    images: ["https://picsum.photos/seed/park/200/300"],
     host: { nickname: "pinecone" },
     location: {
       name: "台南公園 - 落羽松林道",
@@ -124,7 +124,7 @@ export const mockActivities: Activity[] = [
     vibe: ["輕鬆", "小群體"],
     socialLevel: 3,
     interests: ["桌遊"],
-    images: ["https://picsum.photos/200/300"],
+    images: ["https://picsum.photos/seed/table/200/300"],
     host: { nickname: "tinytable" },
     location: {
       name: "台南公園 - 涼亭 A",
@@ -141,7 +141,7 @@ export const mockActivities: Activity[] = [
     vibe: ["安靜", "藝術感"],
     socialLevel: 1,
     interests: ["素描", "觀察"],
-    images: ["https://picsum.photos/200/300"],
+    images: ["https://picsum.photos/seed/art/200/300"],
     host: { nickname: "pencilcloud" },
     location: {
       name: "台南公園 - 大樹陰影下",
@@ -158,7 +158,7 @@ export const mockActivities: Activity[] = [
     vibe: ["chill", "愉快"],
     socialLevel: 0,
     interests: ["散步", "自然觀察"],
-    images: ["https://picsum.photos/200/300"],
+    images: ["https://picsum.photos/seed/nature/200/300"],
     host: { nickname: "nutty" },
     location: {
       name: "台南公園 - 步道區",
