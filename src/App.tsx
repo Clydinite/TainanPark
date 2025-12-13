@@ -143,9 +143,9 @@ export default function App() {
                 <Profile
                   initialName="楊子萱"
                   initialAge="16"
-                  initialSchool="台南市立XX高中"
+                  initialSchool="台南市立和風高中"
                   initialSocialMedia="@zixuan.draws"
-                  initialProfilePicture="https://picsum.photos/200/200"
+                  initialProfilePicture="persona_profile.png"
                   initialBio="有點害羞、喜歡散步跟拍天空。正在努力變得比較勇敢 :)"
                 />
               }

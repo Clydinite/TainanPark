@@ -7,6 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
+import { UserPen } from "lucide-react";
+
 interface ProfileProps {
   initialName?: string;
   initialAge?: string;
@@ -66,12 +68,16 @@ export default function Profile({
             <Label className="m-2">個人照片</Label>
             <div className="mt-2 flex flex-col items-center gap-4">
               <Avatar className="w-40 h-40">
-                <AvatarImage src={profilePicture || "/vite.svg"} alt="個人照片" />
-                <AvatarFallback>TP</AvatarFallback>
+                {profilePicture && (
+                  <AvatarImage src={initialProfilePicture} alt="個人照片" />
+                )}
+                <AvatarFallback className="bg-transparent border-2 border-dashed">
+                  <UserPen className="w-15 h-15 text-white bg-transparent" />
+                </AvatarFallback>
               </Avatar>
               <Button className="w-9/12" variant="outline" asChild>
                 <label>
-                  上傳圖片
+                  {isFilled ? "更改照片" : "上傳圖片"}
                   <Input type="file" className="hidden"
                     onChange={(e) => {
                       if (e.target.files && e.target.files[0]) {
