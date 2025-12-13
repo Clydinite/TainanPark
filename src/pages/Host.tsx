@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { allTags } from "@/lib/tags";
+import { allTags } from "@/lib/shared";
 
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
@@ -59,7 +59,7 @@ export default function HostActivityPage() {
 
         {/* FORM */}
 
-        <Card className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl shadow-xl p-6 space-y-6">
+        <Card className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl shadow-xl p-6 space-y-0">
           <div>
             <Label className="m-2">活動名稱</Label>
             <Input
@@ -71,8 +71,8 @@ export default function HostActivityPage() {
           </div>
 
           <div>
-            <Label className="m-2">標籤 (可選多個)</Label>
-            <div className="flex gap-2 mt-2">
+            <Label className="m-2 mb-3">標籤 (可選多個)</Label>
+            <div className="flex overflow-clip gap-2 mt-2">
               {allTags.map((tag) => (
                 <Button
                   key={tag}
@@ -89,7 +89,7 @@ export default function HostActivityPage() {
           <div className="flex flex-col">
             <div className="flex items-center">
               <Label className="m-2">活動強度</Label>
-              <div className="ml-auto text-foreground">
+              <div className="ml-auto text-muted-foreground text-xs">
                 強度: {activityLevel} / 5
               </div>
             </div>
