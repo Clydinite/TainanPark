@@ -14,6 +14,7 @@ import Activities from "./pages/Activities";
 import Host from "./pages/Host";
 import Welcome from "./pages/Welcome";
 import Login from "./pages/Login";
+import Profile from "./pages/Profile"; // Import the new Profile component
 
 const routerType = import.meta.env.VITE_ROUTER_TYPE ?? "browser";
 const Router = routerType === "hash" ? HashRouter : BrowserRouter;
@@ -26,6 +27,7 @@ function Nav() {
     { path: "/", label: "Home" },
     { path: "/activities", label: "Activities" },
     { path: "/host", label: "Host" },
+    { path: "/profile", label: "個人檔案" },
   ];
 
   const getNavClass = (path: string) =>
@@ -122,6 +124,19 @@ export default function App() {
             <Route path="/activities" element={<Activities />} />
             <Route path="/host" element={<Host />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route
+              path="/profile-demo"
+              element={
+                <Profile
+                  initialName="李小明"
+                  initialAge="25"
+                  initialSchool="成功大學"
+                  initialSocialMedia="@lee_xiaoming"
+                  initialProfilePicture="https://picsum.photos/200/200"
+                />
+              }
+            />
           </Routes>
         </div>
       </ThemeProvider>
