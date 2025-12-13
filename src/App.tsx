@@ -14,7 +14,8 @@ import Activities from "./pages/Activities";
 import Host from "./pages/Host";
 import Welcome from "./pages/Welcome";
 import Login from "./pages/Login";
-import Profile from "./pages/Profile"; // Import the new Profile component
+import Profile from "./pages/Profile";
+import MyActivities from "./pages/MyActivities";
 
 const routerType = import.meta.env.VITE_ROUTER_TYPE ?? "browser";
 const Router = routerType === "hash" ? HashRouter : BrowserRouter;
@@ -27,6 +28,7 @@ function Nav() {
     { path: "/", label: "首頁" },
     { path: "/activities", label: "探索活動" },
     { path: "/host", label: "發起活動" },
+    { path: "/my-activities", label: "我的活動" },
     { path: "/profile", label: "個人檔案" },
   ];
 
@@ -44,9 +46,9 @@ function Nav() {
           to="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <img src="/vite.svg" className="h-8" alt="Logo" />
+          <img src="/park-icon.svg" className="h-8" alt="Logo" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-            台南公園活動
+            台南公園輕社交平台
           </span>
         </Link>
         <button
@@ -125,6 +127,7 @@ export default function App() {
             <Route path="/host" element={<Host />} />
             <Route path="/login" element={<Login />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/my-activities" element={<MyActivities />} />
             <Route
               path="/profile-demo"
               element={
