@@ -11,7 +11,7 @@ import {
 export default function MyActivitiesPage() {
   // For demonstration, we assume that the user only joined a single activity and hosted none.
   const myHostedActivities: typeof mockActivities = [];
-  const myJoinedActivities = [mockActivities[0]];
+  const myJoinedActivities = [mockActivities[1]];
 
   return (
     <div className="p-6 max-w-screen-lg mx-auto z-10">
