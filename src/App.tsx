@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 
 import { ThemeProvider } from "./components/theme-provider";
-import { useState } from "react";
 
 import Activities from "./pages/Activities";
 import Host from "./pages/Host";
@@ -16,14 +15,22 @@ import Welcome from "./pages/Welcome";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import MyActivities from "./pages/MyActivities";
+import { Button } from "./components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetClose,
+} from "./components/ui/sheet";
+
+import { Menu } from "lucide-react";
+import clsx from "clsx";
 
 const routerType = import.meta.env.VITE_ROUTER_TYPE ?? "browser";
 const Router = routerType === "hash" ? HashRouter : BrowserRouter;
 
 function Nav() {
   const location = useLocation();
-  const [isOpen, setIsOpen] = useState(false);
-
   const navItems = [
     { path: "/", label: "首頁" },
     { path: "/activities", label: "探索活動" },
@@ -32,71 +39,73 @@ function Nav() {
     { path: "/profile", label: "個人檔案" },
   ];
 
-  const getNavClass = (path: string) =>
-    `block py-2 px-3 rounded-sm md:p-0 ${
-      location.pathname === path
-        ? "text-white bg-blue-700 md:bg-transparent md:text-blue-700 md:dark:text-blue-500"
-        : "text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-    }`;
-
   return (
-    <nav className="bg-white border-gray-200 dark:bg-gray-900">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <Link
-          to="/"
-          className="flex items-center space-x-3 rtl:space-x-reverse"
-        >
-          <img src="/park-icon.svg" className="h-8" alt="Logo" />
-          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-            台南公園輕社交平台
-          </span>
-        </Link>
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          type="button"
-          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-          aria-controls="navbar-default"
-          aria-expanded={isOpen}
-          aria-label="切換導覽"
-        >
-          <span className="sr-only">開啟主選單</span>
-          <svg
-            className="w-5 h-5"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 17 14"
-          >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M1 1h15M1 7h15M1 13h15"
-            />
-          </svg>
-        </button>
-        <div
-          className={`${isOpen ? "block" : "hidden"} w-full md:block md:w-auto`}
-          id="navbar-default"
-        >
-          <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-            {navItems.map(({ path, label }) => (
-              <li key={path}>
-                <Link
-                  to={path}
-                  className={getNavClass(path)}
-                  aria-current={location.pathname === path ? "page" : undefined}
-                  // onClick={() => setIsOpen(false)} // close menu when clicking a link
-                >
-                  {label}
-                </Link>
-              </li>
+    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex h-14 max-w-screen-2xl items-center">
+        <div className="mr-4 flex">
+          <Link to="/" className="ml-6 flex items-center space-x-2">
+            <img src="/park-icon.svg" className="h-6 w-6" alt="Logo" />
+            <span className="font-bold">
+              台南公園輕社交平台
+            </span>
+          </Link>
+          <nav className="hidden gap-6 md:flex">
+            {navItems.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={clsx(
+                  "flex items-center text-lg font-medium transition-colors hover:text-foreground/80 sm:text-sm",
+                  location.pathname === item.path
+                    ? "text-foreground"
+                    : "text-foreground/60"
+                )}
+              >
+                {item.label}
+              </Link>
             ))}
-          </ul>
+          </nav>
+        </div>
+        <div className="flex flex-1 items-center justify-end">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button
+                variant="outline"
+                className="p-0 h-8 w-8 mr-3 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
+              >
+                <Menu className="h-5 w-5" />
+                <span className="sr-only">Toggle Menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="pr-0">
+              <Link to="/welcome" className="m-6 flex items-center space-x-2">
+                <img src="/park-icon.svg" className="h-6 w-6" alt="Logo" />
+                <span className="font-bold">台南公園輕社交平台</span>
+              </Link>
+              <div className="h-[calc(100vh-8rem)] pb-10 pl-6">
+                <div className="flex flex-col space-y-3">
+                  {navItems.map((item) => (
+                    <SheetClose asChild key={item.path}>
+                      <Link
+                        to={item.path}
+                        className={clsx(
+                          "text-xl font-medium transition-colors hover:text-foreground/80",
+                          location.pathname === item.path
+                            ? "text-foreground"
+                            : "text-foreground/60"
+                        )}
+                      >
+                        {item.label}
+                      </Link>
+                    </SheetClose>
+                  ))}
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
-    </nav>
+    </header>
   );
 }
 
@@ -132,12 +141,12 @@ export default function App() {
               path="/profile-demo"
               element={
                 <Profile
-                  initialName="李小明"
-                  initialAge="25"
-                  initialSchool="成功大學"
-                  initialSocialMedia="@lee_xiaoming"
+                  initialName="楊子萱"
+                  initialAge="16"
+                  initialSchool="台南市立XX高中"
+                  initialSocialMedia="@zixuan.draws"
                   initialProfilePicture="https://picsum.photos/200/200"
-                  initialBio="喜歡在公園散步和攝影，對一切美麗的事物充滿好奇。"
+                  initialBio="有點害羞、喜歡散步跟拍天空。正在努力變得比較勇敢 :)"
                 />
               }
             />
