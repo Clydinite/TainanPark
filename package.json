@@ -1,5 +1,5 @@
 {
-  "name": "secondhand-book-exchange",
+  "name": "tainan-park-activity-platform",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "build-gh": "cross-env VITE_BASE_URL=/Second-Hand-Book-Exchange/ VITE_ROUTER_TYPE=hash vite build",
+    "build-gh": "cross-env VITE_BASE_URL=/TainanPark/ VITE_ROUTER_TYPE=hash vite build",
     "deploy-gh": "gh-pages -d dist"
   },
   "dependencies": {
