@@ -1,5 +1,8 @@
 import { v4 as uuidv4 } from "uuid";
 import type { Activity } from "@/types/global";
+import playingInTheParkPng from '/playing_in_the_park.png';
+import tainanParkPng from '/tainan_park.png';
+import tainanWalkSketchPng from '/tainan_walk_sketch.png';
 
 export const mockActivities: Activity[] = [
 
@@ -9,7 +12,7 @@ export const mockActivities: Activity[] = [
     vibe: ["活潑", "熱鬧", "小群體"],
     socialLevel: 3, // 需要持續互動、討論、一起解任務
     interests: ["小遊戲", "團隊合作", "跑跳活動"],
-    images: ["playing_in_the_park.png"],
+    images: [playingInTheParkPng],
 
     host: {
       nickname: "teamtaro",
@@ -57,7 +60,7 @@ export const mockActivities: Activity[] = [
     vibe: ["輕鬆", "安靜", "小群體"],
     socialLevel: 1, // 可選擇性小互動
     interests: ["散步", "手機攝影", "觀景", "天空控"],
-    images: ["tainan_park.png"],
+    images: [tainanParkPng],
     host: {
       nickname: "skywalker",
       avatar: "https://i.pravatar.cc/150?img=32"
@@ -95,7 +98,7 @@ export const mockActivities: Activity[] = [
     vibe: ["chill", "安靜", "微活動"],
     socialLevel: 1,
     interests: ["插畫", "素描", "散步", "觀察自然"],
-    images: ["tainan_walk_sketch.png", "tainan_walk_sketch_2.png"],
+    images: [tainanWalkSketchPng],
     host: { nickname: "mellowcat", avatar: "https://i.pravatar.cc/150?img=12" },
     location: {
       name: "台南公園 - 落羽松步道",

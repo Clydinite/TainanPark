@@ -26,6 +26,8 @@ import {
 import { Menu } from "lucide-react";
 import clsx from "clsx";
 
+import parkIcon from "/park-icon.svg";
+
 const routerType = import.meta.env.VITE_ROUTER_TYPE ?? "browser";
 const Router = routerType === "hash" ? HashRouter : BrowserRouter;
 
@@ -44,7 +46,7 @@ function Nav() {
       <div className="container flex h-14 max-w-screen-2xl items-center">
         <div className="mr-4 flex">
           <Link to="/" className="ml-6 flex items-center space-x-2">
-            <img src="/park-icon.svg" className="h-6 w-6" alt="Logo" />
+            <img src={parkIcon} className="h-6 w-6" alt="Logo" />
             <span className="font-bold">
               台南公園輕社交平台
             </span>
@@ -78,8 +80,8 @@ function Nav() {
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="pr-0">
-              <Link to="/welcome" className="m-6 flex items-center space-x-2">
-                <img src="/park-icon.svg" className="h-6 w-6" alt="Logo" />
+              <Link to="/" className="m-6 flex items-center space-x-2">
+                <img src={parkIcon} className="h-6 w-6" alt="Logo" />
                 <span className="font-bold">台南公園輕社交平台</span>
               </Link>
               <div className="h-[calc(100vh-8rem)] pb-10 pl-6">
