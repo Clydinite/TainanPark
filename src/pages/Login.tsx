@@ -22,11 +22,8 @@ export default function LoginPage() {
     >
       <Card className="w-full max-w-md p-8 rounded-2xl backdrop-blur-md bg-white/5 border border-white/10 shadow-xl space-y-6">
         <h1 className="text-2xl font-bold text-white text-center">
-          使用成功大學帳號登入
+          使用 Google 帳號登入
         </h1>
-        {/* <p className="text-sm text-white/80 text-center">
-          Use your NCKU student account to sign in
-        </p> */}
 
         <div className="space-y-4">
           <Button
