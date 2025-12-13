@@ -23,11 +23,11 @@ export function ActivityCard({ activity }: { activity: Activity }) {
         className="w-full h-48 object-cover aspect-video"
       />
       <CardContent className="p-4 flex flex-col flex-grow">
-        <h3 className="font-semibold text-lg text-white mb-2">{activity.name}</h3>
+        <h3 className="font-semibold text-lg text-white mb-4">{activity.name}</h3>
         <div className="text-xs text-gray-400 mb-3 flex flex-col items-start gap-2">
-          <span>📍 {activity.location.name}</span>
-          <span>🗓️ {formattedDate} {activity.schedule.start}</span>
-          <span> 🗫 {socialLevelDescriptions.get(activity.socialLevel)}</span>
+          <span><span className="inline-block w-[2em]">📍</span> {activity.location.name}</span>
+          <span><span className="inline-block w-[2em]">🗓️</span> {formattedDate} {activity.schedule.start}</span>
+          <span><span className="inline-block w-[2em]">🗫</span> {socialLevelDescriptions.get(activity.socialLevel)}</span>
         </div>
         <div className="flex flex-wrap gap-1 mb-4">
           {activity.vibe.map((v) => (
