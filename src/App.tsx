@@ -24,9 +24,9 @@ function Nav() {
   const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
-    { path: "/", label: "Home" },
-    { path: "/activities", label: "Activities" },
-    { path: "/host", label: "Host" },
+    { path: "/", label: "首頁" },
+    { path: "/activities", label: "探索活動" },
+    { path: "/host", label: "發起活動" },
     { path: "/profile", label: "個人檔案" },
   ];
 
@@ -46,7 +46,7 @@ function Nav() {
         >
           <img src="/vite.svg" className="h-8" alt="Logo" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-            Tainan Park Activities
+            台南公園活動
           </span>
         </Link>
         <button
@@ -55,9 +55,9 @@ function Nav() {
           className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
           aria-controls="navbar-default"
           aria-expanded={isOpen}
-          aria-label="Toggle navigation"
+          aria-label="切換導覽"
         >
-          <span className="sr-only">Open main menu</span>
+          <span className="sr-only">開啟主選單</span>
           <svg
             className="w-5 h-5"
             aria-hidden="true"
@@ -134,6 +134,7 @@ export default function App() {
                   initialSchool="成功大學"
                   initialSocialMedia="@lee_xiaoming"
                   initialProfilePicture="https://picsum.photos/200/200"
+                  initialBio="喜歡在公園散步和攝影，對一切美麗的事物充滿好奇。"
                 />
               }
             />

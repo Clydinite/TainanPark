@@ -25,13 +25,13 @@ const dateFilters = [
   { id: "next7days", label: "未來7天" },
 ];
 
-const socialLevelDescriptions: string[] = [
-  "幾乎不需說話",
-  "可選擇性小互動",
-  "輕度聊天",
-  "中度互動",
-  "高度互動",
-];
+const socialLevelDescriptions: Map<number, string> = new Map([
+  [1, "幾乎不需說話"],
+  [2, "可選擇性小互動"],
+  [3, "輕度聊天"],
+  [4, "中度互動"],
+  [5, "高度互動"],
+]);
 
 function ActivityCard({ activity }: { activity: Activity }) {
   const scheduleDate = new Date(activity.schedule.date);
@@ -51,7 +51,7 @@ function ActivityCard({ activity }: { activity: Activity }) {
         <div className="text-xs text-gray-400 mb-3 flex flex-col items-start gap-2">
           <span>📍 {activity.location.name}</span>
           <span>🗓️ {formattedDate} {activity.schedule.start}</span>
-          <span> 🗫 {socialLevelDescriptions[activity.socialLevel]}</span>
+          <span> 🗫 {socialLevelDescriptions.get(activity.socialLevel)}</span>
         </div>
         <div className="flex flex-wrap gap-1 mb-4">
           {activity.vibe.map((v) => (
@@ -161,7 +161,7 @@ function FilterPillGroup({ title, children }: { title: string, children: React.R
     return (
         <div className="flex flex-col">
             <label className="text-muted-foreground my-2">{title}</label>
-            <ScrollArea className="w-full pb-4">
+            <ScrollArea className="w-full">
                 <div className="flex space-x-2">
                     {children}
                 </div>
@@ -242,10 +242,10 @@ export default function ActivitiesPage() {
         >
           <div>
             <h1 className="text-4xl md:text-5xl font-extrabold drop-shadow-md">
-              尋找活動
+              探索活動
             </h1>
             <p className="text-muted-foreground text-lg mt-4 mb-6">
-              在台南公園，發現或發起一個無壓力的活動。
+              在台南公園，發現或發起一個無壓力的活動吧！
             </p>
           </div>
 
@@ -259,8 +259,8 @@ export default function ActivitiesPage() {
               />
               
               <div className="flex flex-col">
-                <label className="text-muted-foreground my-2">
-                  社交強度: {socialLevel[0]} - {socialLevel[1]}
+                <label className="text-muted-foreground my-4">
+                  社交強度: {socialLevelDescriptions.get(socialLevel[0])} - {socialLevelDescriptions.get(socialLevel[1])}
                 </label>
                 <Slider
                   min={1}
@@ -269,9 +269,6 @@ export default function ActivitiesPage() {
                   value={socialLevel}
                   onValueChange={setSocialLevel}
                 />
-                <div className="flex justify-between text-xs text-muted-foreground mt-1 px-1">
-                    {socialLevelDescriptions.map(desc => <span key={desc} className="w-1/5 text-center">{desc}</span>)}
-                </div>
               </div>
 
                 <FilterPillGroup title="時間">
@@ -296,7 +293,7 @@ export default function ActivitiesPage() {
                 </FilterPillGroup>
                 
               <div className="flex flex-col">
-                <label className="text-muted-foreground my-2">
+                <label className="text-muted-foreground my-4">
                   人數: {groupSize[0]} - {groupSize[1]} 人
                 </label>
                 <Slider

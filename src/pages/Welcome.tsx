@@ -12,7 +12,7 @@ export default function Welcome() {
     >
       <div className="flex flex-col items-center text-center max-w-5xl w-full -mt-10 md:mt-0">
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-12">
-          Welcome to the Tainan Park Activity Platform
+          歡迎來到台南公園活動平台
         </h1>
         <div className="flex flex-col sm:flex-row gap-8 w-full justify-center">
           <Link to="/activities" className="w-full sm:w-auto">
@@ -20,7 +20,7 @@ export default function Welcome() {
               variant="default"
               className="w-full sm:w-[15rem] h-[4rem] text-xl font-bold p-4 border border-white/10 bg-white/10 backdrop-blur-md rounded-2xl shadow-lg text-white hover:text-black"
             >
-              Find Activities
+              探索活動
             </Button>
           </Link>
           <Link to="/host" className="w-full sm:w-auto">
@@ -28,7 +28,7 @@ export default function Welcome() {
               variant="default"
               className="w-full sm:w-[15rem] h-[4rem] text-xl font-bold p-4 border border-white/10 bg-white/10 backdrop-blur-md rounded-2xl shadow-lg text-white hover:text-black"
             >
-              Host Activity
+              發起活動
             </Button>
           </Link>
         </div>

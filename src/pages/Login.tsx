@@ -22,7 +22,7 @@ export default function LoginPage() {
     >
       <Card className="w-full max-w-md p-8 rounded-2xl backdrop-blur-md bg-white/5 border border-white/10 shadow-xl space-y-6">
         <h1 className="text-2xl font-bold text-white text-center">
-          Sign In with NCKU Account
+          使用成功大學帳號登入
         </h1>
         {/* <p className="text-sm text-white/80 text-center">
           Use your NCKU student account to sign in
@@ -34,7 +34,7 @@ export default function LoginPage() {
             className="w-full flex items-center justify-center gap-2 border-white/10 bg-white/10 text-white hover:bg-white/20"
             onClick={() =>
               alert(
-                "😅 This is a demo. Google sign in is not actually implemented."
+                "😅 這是示範功能。Google 登入尚未實作。"
               )
             }
           >
@@ -43,7 +43,7 @@ export default function LoginPage() {
               alt="Google"
               className="w-5 h-5"
             />
-            Sign in with Google
+            使用 Google 登入
           </Button>
 
           <Button
@@ -51,7 +51,7 @@ export default function LoginPage() {
             className="w-full text-sm text-white/70 hover:text-white"
             onClick={handleLogin}
           >
-            Skip for now (only available for demo)
+            暫時跳過 (僅供示範)
           </Button>
         </div>
       </Card>

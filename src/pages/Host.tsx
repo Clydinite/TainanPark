@@ -43,10 +43,10 @@ export default function HostActivityPage() {
         {/* TITLE */}
         <div>
           <h1 className="text-4xl md:text-5xl font-extrabold drop-shadow-md">
-            Host an Activity
+            發起活動
           </h1>
           <p className="text-muted-foreground text-lg mt-4 mb-6">
-            Share your activity with the community.
+            與社群分享您的活動。
           </p>
         </div>
 
@@ -54,30 +54,30 @@ export default function HostActivityPage() {
 
         <Card className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl shadow-xl p-6 space-y-6">
           <div>
-            <Label className="m-2">Activity Name</Label>
+            <Label className="m-2">活動名稱</Label>
             <Input
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="e.g. Morning Yoga, Ultimate Frisbee"
+              placeholder="例如：走路、看夕陽"
               className="mt-1"
             />
           </div>
 
           <div>
-            <Label className="m-2">Tags</Label>
+            <Label className="m-2">標籤</Label>
             <Input
               value={tags}
               onChange={(e) => setTags(e.target.value)}
-              placeholder="e.g. Relaxing, Sports, Intense"
+              placeholder="例如：輕鬆、運動、高強度"
               className="mt-1"
             />
           </div>
 
           <div className="flex flex-col">
             <div className="flex items-center">
-              <Label className="m-2">Activity Level</Label>
+              <Label className="m-2">活動強度</Label>
               <div className="ml-auto text-foreground">
-                Level: {activityLevel} / 5
+                強度: {activityLevel} / 5
               </div>
             </div>
             <Slider
@@ -91,38 +91,38 @@ export default function HostActivityPage() {
           </div>
 
           <div>
-            <Label className="m-2">Image URL</Label>
+            <Label className="m-2">圖片網址</Label>
             <Input
               value={imageUrl}
               onChange={(e) => setImageUrl(e.target.value)}
-              placeholder="Paste a link to an image for the activity"
+              placeholder="貼上活動圖片連結"
               className="mt-1"
             />
             {imageUrl && (
               <img
                 src={imageUrl}
-                alt="Preview"
+                alt="預覽圖"
                 className="mt-3 w-32 h-48 object-cover rounded-xl shadow-inner"
               />
             )}
           </div>
 
           <div>
-            <Label className="m-2">Schedule</Label>
+            <Label className="m-2">時間安排</Label>
             <Input
               value={schedule}
               onChange={(e) => setSchedule(e.target.value)}
-              placeholder="e.g. Every Saturday at 8:00 AM"
+              placeholder="例如：每週六上午 8:00"
               className="mt-1"
             />
           </div>
 
           <div>
-            <Label className="m-2">Activity Description</Label>
+            <Label className="m-2">活動說明</Label>
             <Textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Tell us more about your activity!"
+              placeholder="請告訴我們更多關於您的活動！"
               className="mt-1"
             />
           </div>
@@ -132,7 +132,7 @@ export default function HostActivityPage() {
               onClick={handleSubmit}
               className="w-full rounded-xl text-lg py-6"
             >
-              Submit Activity Listing
+              提交活動
             </Button>
           </div>
         </Card>
