@@ -16,7 +16,7 @@ export function ActivityCard({ activity }: { activity: Activity }) {
   }月${scheduleDate.getDate()}日`;
 
   return (
-    <Card className="group transition-transform overflow-hidden border border-white/10 bg-white/5 backdrop-blur-md rounded-2xl shadow-xl flex flex-col h-full">
+    <Card className="group transition-transform overflow-hidden border border-white/10 bg-white/5 backdrop-blur-md rounded-2xl shadow-xl flex flex-col h-full py-0 gap-2">
       <img
         src={activity.images[0]}
         alt={activity.name}
@@ -54,8 +54,8 @@ export function ActivityDetails({ activity }: { activity: Activity }) {
   
     const trigger = (
       <Button
-        variant="ghost"
-        className="text-white hover:text-blue-400 p-0 text-sm"
+        variant="outline"
+        className="text-white hover:text-blue-400 p-0 text-sm w-full mt-2"
         onClick={() => setOpen(true)}
       >
         查看更多 →
