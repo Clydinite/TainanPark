@@ -11,8 +11,11 @@ export default function Welcome() {
       className="flex h-[calc(100vh-72px)] items-center justify-center bg-glass bg-opacity-50 backdrop-blur-md rounded-2xl px-4"
     >
       <div className="flex flex-col items-center text-center max-w-5xl w-full -mt-10 md:mt-0">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold">
+          歡迎來到
+        </h1>
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-12">
-          歡迎來到台南公園活動平台
+          台南公園輕社交平台
         </h1>
         <div className="flex flex-col sm:flex-row gap-8 w-full justify-center">
           <Link to="/activities" className="w-full sm:w-auto">
