@@ -5,7 +5,6 @@ import tainanParkPng from '/tainan_park.png';
 import tainanWalkSketchPng from '/tainan_walk_sketch.png';
 
 export const mockActivities: Activity[] = [
-
   {
     id: uuidv4(),
     name: "公園小隊挑戰：超隨興任務大亂鬥",
@@ -13,28 +12,22 @@ export const mockActivities: Activity[] = [
     socialLevel: 3, // 需要持續互動、討論、一起解任務
     interests: ["小遊戲", "團隊合作", "跑跳活動"],
     images: [playingInTheParkPng],
-
     host: {
       nickname: "teamtaro",
       avatar: "https://i.pravatar.cc/150?img=5"
     },
-
     location: {
       name: "台南公園 - 大草坪區",
       coordinates: { lat: 22.9987, lng: 120.2140 }
     },
-
     groupSize: { min: 6, max: 12 },
-
     schedule: {
       date: "2025-12-20",
       start: "16:00",
       end: "17:30"
     },
-
     description:
       "我們會分成小隊，完成一系列超隨興的公園任務：像是 30 秒內拍到「跑步中的鴿子」、跟陌生阿伯借一句人生金句、五人同步跳拍成功一次... 全程都要一起討論策略、分工、互相加油。氣氛很吵（好玩那種），會一直講話，不太適合害羞模式。",
-
     comments: [
       {
         handle: "teamtaro",
