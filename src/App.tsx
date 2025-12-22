@@ -210,8 +210,18 @@ export default function App() {
                   initialAge="16"
                   initialSchool="台南市立和風高中"
                   initialSocialMedia="@zixuan.draws"
-                  initialProfilePicture="persona_profile.png"
+                  initialProfilePicture="/persona_profile.png"
                   initialBio="有點害羞、喜歡散步跟拍天空。正在努力變得比較勇敢 :)"
+                  initialCurrentObsession="Ghibli Jazz 🎧"
+                  initialSocialBattery={60}
+                  initialAskMeAboutTags={['宮崎駿', '天空攝影', '貓']}
+                  initialPersonalitySliders={{
+                    socialEnergy: 40,
+                    talkativeness: 25,
+                    activityPace: 30,
+                    participationStyle: 20,
+                    planningPreference: 75,
+                  }}
                 />
               }
             />
