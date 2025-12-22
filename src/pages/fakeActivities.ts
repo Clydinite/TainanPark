@@ -44,7 +44,8 @@ export const mockActivities: Activity[] = [
         avatar: "https://i.pravatar.cc/150?img=9",
         text: "第一次參加就被分隊衝來衝去…但很好玩啦！"
       }
-    ]
+    ],
+    verificationStatus: "verified"
   },
 
   {
@@ -82,7 +83,8 @@ export const mockActivities: Activity[] = [
         avatar: "https://i.pravatar.cc/150?img=45",
         text: "行程很chill，剛好那天有空～"
       }
-    ]
+    ],
+    verificationStatus: "verified"
   },
 
   {
@@ -105,7 +107,8 @@ export const mockActivities: Activity[] = [
       { handle: "mellowcat", avatar: "https://i.pravatar.cc/150?img=12", text: "最近落羽松超漂亮，想找人一起邊走邊畫。" },
       { handle: "cloudberry", avatar: "https://i.pravatar.cc/150?img=32", text: "我素描很菜，但看起來是低壓的那種…可以嗎？" },
       { handle: "mellowcat", avatar: "https://i.pravatar.cc/150?img=12", text: "完全可以！真的只是隨手畫～" }
-    ]
+    ],
+    verificationStatus: "verified"
   },
 
   {
@@ -122,7 +125,8 @@ export const mockActivities: Activity[] = [
     },
     groupSize: { min: 3, max: 6 },
     schedule: { date: "2025-03-17", start: "16:00" },
-    description: "帶上你的歌單，用分線器一起聽，不用寒暄太多。"
+    description: "帶上你的歌單，用分線器一起聽，不用寒暄太多。",
+    verificationStatus: "verified"
   },
 
   {
@@ -138,7 +142,8 @@ export const mockActivities: Activity[] = [
       coordinates: { lat: 22.9979, lng: 120.2150 }
     },
     schedule: { date: "2025-03-18", start: "16:30" },
-    description: "帶一本你想看的書，我們只是一起安靜地坐著。"
+    description: "帶一本你想看的書，我們只是一起安靜地坐著。",
+    verificationStatus: "verified"
   },
 
   {
@@ -155,7 +160,8 @@ export const mockActivities: Activity[] = [
     },
     groupSize: { min: 3, max: 6 },
     schedule: { date: "2025-03-19", start: "17:00" },
-    description: "一起找小花、小葉子、小昆蟲，用手機拍下微距世界。"
+    description: "一起找小花、小葉子、小昆蟲，用手機拍下微距世界。",
+    verificationStatus: "verified"
   },
 
   {
@@ -172,7 +178,8 @@ export const mockActivities: Activity[] = [
     },
     groupSize: { min: 3, max: 7 },
     schedule: { date: "2025-03-20", start: "17:10" },
-    description: "想講再講，不講也沒關係，是個讓人不尷尬的小圈。"
+    description: "想講再講，不講也沒關係，是個讓人不尷尬的小圈。",
+    verificationStatus: "verified"
   },
 
   {
@@ -189,7 +196,8 @@ export const mockActivities: Activity[] = [
     },
     groupSize: { min: 2, max: 5 },
     schedule: { date: "2025-03-20", start: "17:00" },
-    description: "慢慢走、慢慢看，不急不趕。"
+    description: "慢慢走、慢慢看，不急不趕。",
+    verificationStatus: "verified"
   },
 
   {
@@ -206,7 +214,8 @@ export const mockActivities: Activity[] = [
     },
     groupSize: { min: 3, max: 6 },
     schedule: { date: "2025-03-21", start: "15:00" },
-    description: "只玩規則超簡單、不會壓力大的桌遊。"
+    description: "只玩規則超簡單、不會壓力大的桌遊。",
+    verificationStatus: "verified"
   },
 
   {
@@ -223,11 +232,12 @@ export const mockActivities: Activity[] = [
     },
     groupSize: { min: 2, max: 4 },
     schedule: { date: "2025-03-22", start: "16:00" },
-    description: "不用畫得好，只是安靜地畫手，是很治癒的事。"
+    description: "不用畫得好，只是安靜地畫手，是很治癒的事。",
+    verificationStatus: "verified"
   },
 
   {
-    id:  uuidv4(),
+    id: uuidv4(),
     name: "一起追松鼠（安靜版）",
     vibe: ["chill", "愉快"],
     socialLevel: 0,
@@ -240,6 +250,7 @@ export const mockActivities: Activity[] = [
     },
     groupSize: { min: 2, max: 5 },
     schedule: { date: "2025-03-23", start: "17:20" },
-    description: "我們不是真的追，只是一起看牠們跑來跑去。"
+    description: "我們不是真的追，只是一起看牠們跑來跑去。",
+    verificationStatus: "verified"
   }
 ];
