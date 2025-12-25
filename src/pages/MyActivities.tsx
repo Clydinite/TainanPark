@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { mockActivities } from "./fakeActivities";
-import { ActivityCard, ActivityDetails } from "@/components/ActivityCard";
+import { ActivityCard } from "@/components/ActivityCard";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
@@ -20,19 +20,16 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import {
-    Stepper,
-    StepperItem,
-    StepperNav,
-    StepperSeparator,
-} from "@/components/ui/stepper";
-import { FileCheck, FileClock, FileText, Check } from "lucide-react";
-
-
-const verificationSteps = [
-  { title: "收到計畫", icon: FileText },
-  { title: "審核中", icon: FileClock },
-  { title: "已驗證", icon: FileCheck },
-];
+  Stepper,
+  StepperIndicator,
+  StepperItem,
+  StepperNav,
+  StepperTitle,
+  StepperTrigger,
+} from '@/components/ui/stepper';
+import { HelpCircle } from "lucide-react"; // Import HelpCircle for the info dialog
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"; // Import Dialog components
+import { verificationSteps } from "@/lib/shared";
 
 const statusToStep = (status: "pending" | "reviewing" | "verified"): number => {
   switch (status) {
@@ -47,10 +44,58 @@ const statusToStep = (status: "pending" | "reviewing" | "verified"): number => {
   }
 };
 
+// Moved StatusInfoDialog outside the component for reusability if needed elsewhere
+function StatusInfoDialog() {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="ghost" size="icon" className="group h-auto p-0 ml-2"> {/* Adjusted styling */}
+          <HelpCircle className="h-4 w-4 text-gray-400 group-hover:text-blue-400" />
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <h3 className="text-lg font-semibold mb-4">關於審核流程</h3>
+        <p className="text-sm text-gray-300 mb-6">我們需要一點時間確認你的活動符合社群規範，確保每個人都能有安全、愉快的體驗。</p>
+        {/* Placeholder for a stepper inside the dialog, similar to the main one */}
+        <div className="flex justify-between items-start text-xs text-gray-400 space-x-2">
+          {verificationSteps.map((stepName, idx) => (
+            <div key={idx} className="flex flex-col items-center flex-1">
+              <span className="w-12 h-6 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold">step {idx + 1}</span>
+              <p className="mt-2 text-center text-sm font-medium text-white">{stepName}</p>
+            </div>
+          ))}
+        </div>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
 
 export default function MyActivitiesPage() {
-  const myHostedActivities = mockActivities.slice(0, 3); // pending, reviewing, verified
-  const myJoinedActivities = [mockActivities[3]]; 
+  const myHostedActivities = mockActivities.slice(4, 7); // pending, reviewing, verified
+  const myJoinedActivities = [mockActivities[3]];
+
+  const StepperContent = ({ activityStatus }: { activityStatus: "pending" | "reviewing" | "verified" }) => (
+    <div className="flex items-center"> {/* Flex container for stepper and info dialog */}
+      <Stepper value={statusToStep(activityStatus)} className="flex-1 space-y-4"> {/* Stepper takes remaining space */}
+        <StepperNav className="gap-3.5">
+          {verificationSteps.map((stepName, index) => (
+            <StepperItem key={index} step={index + 1} className="relative flex-1 items-start">
+              <StepperTrigger className="flex flex-col items-start justify-center gap-1 grow">
+                <StepperIndicator className="bg-border rounded-full h-1 w-full data-[state=active]:bg-primary"></StepperIndicator>
+                <div className="flex flex-col items-start gap-1">
+                  <StepperTitle className="text-start text-xs font-semibold group-data-[state=inactive]/step:text-muted-foreground">
+                    {stepName}
+                  </StepperTitle>
+                </div>
+              </StepperTrigger>
+            </StepperItem>
+          ))}
+        </StepperNav>
+      </Stepper>
+      <StatusInfoDialog /> {/* Info dialog next to the stepper */}
+    </div>
+  );
 
   return (
     <div className="p-6 max-w-screen-lg mx-auto z-10">
@@ -80,37 +125,40 @@ export default function MyActivitiesPage() {
                 {myHostedActivities.length > 0 ? (
                   myHostedActivities.map((activity) => {
                     const stepperComponent = (
-                        <Stepper
-                            value={statusToStep(activity.verificationStatus)}
-                            indicators={{ completed: <Check className="size-4" /> }}
-                            className="space-y-4"
-                        >
-                            <StepperNav className="gap-3">
-                                {verificationSteps.map((step, index) => (
-                                    <StepperItem key={index} step={index + 1} className="relative flex-1 items-start">
-                                        <div className="flex flex-col items-start justify-center gap-2.5 grow">
-                                            <div className="size-8 border-2 flex items-center justify-center rounded-full data-[state=completed]:text-white data-[state=completed]:bg-green-500 data-[state=inactive]:bg-transparent data-[state=inactive]:border-border data-[state=inactive]:text-muted-foreground">
-                                                <step.icon className="size-4" />
-                                            </div>
-                                            <p className="text-xs font-semibold text-center group-data-[state=inactive]/step:text-muted-foreground">
-                                                {step.title}
-                                            </p>
-                                        </div>
-                                        {verificationSteps.length > index + 1 && (
-                                            <StepperSeparator className="absolute top-4 inset-x-0 start-9 m-0 group-data-[orientation=horizontal]/stepper-nav:w-[calc(100%-2rem)] group-data-[orientation=horizontal]/stepper-nav:flex-none  group-data-[state=completed]/step:bg-green-500" />
-                                        )}
-                                    </StepperItem>
-                                ))}
-                            </StepperNav>
-                        </Stepper>
+                      <div className="px-4">
+                        <StepperContent activityStatus={activity.verificationStatus} />
+                      </div>
                     );
+
                     return (
-                      <ActivityCard 
+                      <ActivityCard
                         key={activity.id}
                         activity={activity}
                         showStatus={true}
                         stepper={stepperComponent}
-                        renderAction={<ActivityDetails activity={activity} stepper={stepperComponent} />}
+                        renderAction={
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <Button variant="destructive" className="w-full mt-4 mb-10">取消活動</Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                              <AlertDialogHeader>
+                                <AlertDialogTitle>確定要取消活動嗎？</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                  取消活動後，所有已報名的成員都會收到通知。
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel>再想想</AlertDialogCancel>
+                                <AlertDialogAction asChild>
+                                  <Button variant="destructive" className="text-white" onClick={() => alert("活動已取消！")}>
+                                    確定取消
+                                  </Button>
+                                </AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
+                        }
                       />
                     )
                   })
@@ -122,20 +170,20 @@ export default function MyActivitiesPage() {
               </div>
             </AccordionContent>
           </AccordionItem>
-          
+
           <AccordionItem value="joined-activities">
             <AccordionTrigger>我參與的活動 ({myJoinedActivities.length})</AccordionTrigger>
             <AccordionContent>
               <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pt-4">
                 {myJoinedActivities.length > 0 ? (
                   myJoinedActivities.map((activity) => (
-                    <ActivityCard 
+                    <ActivityCard
                       key={activity.id}
                       activity={activity}
                       renderAction={
                         <AlertDialog>
                           <AlertDialogTrigger asChild>
-                            <Button variant="destructive">取消參加</Button>
+                            <Button variant="destructive" className="w-full mt-4 mb-10">取消參加</Button>
                           </AlertDialogTrigger>
                           <AlertDialogContent>
                             <AlertDialogHeader>
@@ -146,7 +194,11 @@ export default function MyActivitiesPage() {
                             </AlertDialogHeader>
                             <AlertDialogFooter>
                               <AlertDialogCancel>再想想</AlertDialogCancel>
-                              <AlertDialogAction onClick={() => alert("已為您取消！")}>確定取消</AlertDialogAction>
+                                <AlertDialogAction asChild>
+                                  <Button variant="destructive" className="text-white" onClick={() => alert("活動已取消！")}>
+                                    確定取消
+                                  </Button>
+                                </AlertDialogAction>
                             </AlertDialogFooter>
                           </AlertDialogContent>
                         </AlertDialog>
