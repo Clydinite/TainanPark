@@ -18,6 +18,7 @@ import Profile from "./pages/Profile";
 import MyActivities from "./pages/MyActivities";
 import FriendsPage from "./pages/Friends";
 import SafetyPage from "./pages/Safety";
+import NotificationsPage from "./pages/Notifications"; // Import the new page
 import { Button } from "./components/ui/button";
 import {
   Sheet,
@@ -25,14 +26,6 @@ import {
   SheetTrigger,
   SheetClose,
 } from "./components/ui/sheet";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 import { Menu, Bell } from "lucide-react";
 import clsx from "clsx";
@@ -43,49 +36,17 @@ const routerType = import.meta.env.VITE_ROUTER_TYPE ?? "browser";
 const Router = routerType === "hash" ? HashRouter : BrowserRouter;
 
 function NotificationBell() {
-    const [unreadCount, setUnreadCount] = useState(3);
-    const [notifications, setNotifications] = useState([
-        { id: 1, message: "有人加入了你的活動：公園小隊挑戰！", read: false },
-        { id: 2, message: "提醒：日落漫步將於2小時後開始，別忘了帶水！", read: false },
-        { id: 3, message: "收到新的活動回饋：🌿 平靜友善。", read: false },
-        { id: 4, message: "恭喜！你的活動「湖畔寫生」已成功發佈。", read: true },
-    ]);
-
-    const markAllAsRead = () => {
-        setNotifications(notifications.map(n => ({ ...n, read: true })));
-        setUnreadCount(0);
-    };
+    const [unreadCount] = useState(3); // Keep state for the red dot
 
     return (
-        <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative p-0 h-8 w-8 mr-2 focus-visible:ring-0 focus-visible:ring-offset-0">
-                    <Bell className="h-5 w-5" />
-                    {unreadCount > 0 && (
-                        <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white" />
-                    )}
-                </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-80 p-2 mr-4">
-                <DropdownMenuLabel className="flex justify-between items-center">
-                    通知
-                    {unreadCount > 0 && (
-                        <Button variant="link" className="h-auto p-0 text-xs" onClick={markAllAsRead}>
-                            全部標記為已讀
-                        </Button>
-                    )}
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                {notifications.length === 0 && <p className="text-center text-gray-500 py-4">沒有新的通知</p>}
-                {notifications.map(notification => (
-                    <DropdownMenuItem key={notification.id} className={clsx("flex flex-col items-start px-2 py-2 cursor-pointer", !notification.read && "bg-blue-900/20")}>
-                        <span className={clsx("text-sm", !notification.read && "font-semibold text-white")}>
-                            {notification.message}
-                        </span>
-                    </DropdownMenuItem>
-                ))}
-            </DropdownMenuContent>
-        </DropdownMenu>
+        <Button asChild variant="ghost" className="relative p-0 h-8 w-8 mr-2 focus-visible:ring-0 focus-visible:ring-offset-0">
+            <Link to="/notifications">
+                <Bell className="h-5 w-5" />
+                {unreadCount > 0 && (
+                    <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white" />
+                )}
+            </Link>
+        </Button>
     );
 }
 
@@ -202,6 +163,7 @@ export default function App() {
             <Route path="/my-activities" element={<MyActivities />} />
             <Route path="/friends" element={<FriendsPage />} />
             <Route path="/safety" element={<SafetyPage />} />
+            <Route path="/notifications" element={<NotificationsPage />} />
             <Route
               path="/profile-demo"
               element={
