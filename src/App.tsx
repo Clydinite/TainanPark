@@ -65,31 +65,30 @@ function Nav() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 max-w-screen-2xl items-center">
-        <div className="mr-4 flex">
-          <Link to="/" className="ml-6 flex items-center space-x-2">
-            <img src={parkIcon} className="h-6 w-6" alt="Logo" />
-            <span className="font-bold">
-              台南公園輕社交平台
-            </span>
-          </Link>
-          <nav className="hidden gap-6 md:flex">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={clsx(
-                  "flex items-center text-lg font-medium transition-colors hover:text-foreground/80 sm:text-sm",
-                  location.pathname === item.path
-                    ? "text-foreground"
-                    : "text-foreground/60"
-                )}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
-        <div className="flex flex-1 items-center justify-end">
+        <Link to="/" className="mr-6 flex items-center space-x-2">
+          <img src={parkIcon} className="h-6 w-6 ml-4" alt="Logo" />
+          <span className="font-bold ml-4">
+            台南公園輕社交平台
+          </span>
+        </Link>
+        <nav className="hidden gap-6 md:flex flex-1 justify-end mr-4">
+          {navItems.map((item) => (
+            <Link
+              key={item.path}
+              to={item.path}
+              className={clsx(
+                "flex items-center text-lg font-medium transition-colors hover:text-foreground/80 sm:text-sm",
+                location.pathname === item.path
+                  ? "text-foreground"
+                  : "text-foreground/60"
+              )}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+        
+        <div className="flex flex-1 md:flex-initial items-center justify-end">
           <NotificationBell />
           <Sheet>
             <SheetTrigger asChild>
