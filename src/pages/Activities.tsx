@@ -83,7 +83,9 @@ export default function ActivitiesPage() {
       return true;
     })();
 
-    return nameMatch && levelMatch && tagsMatch && dateMatch && groupSizeMatch;
+    const verificationMatch = activity.verificationStatus === 'verified';
+
+    return nameMatch && levelMatch && tagsMatch && dateMatch && groupSizeMatch && verificationMatch;
   });
 
   const handleTagClick = (tag: string) => {

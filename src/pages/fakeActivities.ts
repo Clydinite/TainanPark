@@ -143,7 +143,7 @@ export const mockActivities: Activity[] = [
     },
     schedule: { date: "2025-03-18", start: "16:30" },
     description: "帶一本你想看的書，我們只是一起安靜地坐著。",
-    verificationStatus: "verified"
+    verificationStatus: "pending"
   },
 
   {
@@ -161,7 +161,7 @@ export const mockActivities: Activity[] = [
     groupSize: { min: 3, max: 6 },
     schedule: { date: "2025-03-19", start: "17:00" },
     description: "一起找小花、小葉子、小昆蟲，用手機拍下微距世界。",
-    verificationStatus: "verified"
+    verificationStatus: "reviewing"
   },
 
   {
