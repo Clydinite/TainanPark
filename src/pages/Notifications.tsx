@@ -157,55 +157,49 @@ export default function NotificationsPage() {
         setNotifications(notifications.map(n => n.id === id ? { ...n, read: true } : n));
     };
 
-    const NotificationText = ({ notification }: { notification: typeof mockNotifications[0] }) => {
+    const NotificationContent = ({ notification }: { notification: Notification }) => {
+        const userDisplay = notification.user || "系統通知";
+        const userAvatar = notification.avatar || ''; // Fallback for system notifications
+
+        let mainMessage = '';
         switch (notification.type) {
             case 'comment':
-                return (
-                    <p>
-                        在「{notification.activity}」底下留了一句話
-                        <span className="text-white block mt-1">
-                            {notification.message}
-                        </span>
-                    </p>
-                );
-
+                mainMessage = `在「${notification.activity}」底下留了一句話：\n${notification.message}`;
+                break;
             case 'join':
-                return (
-                    <p>
-                        有人加入了你的活動
-                        <span className="text-white block mt-1">
-                            「{notification.activity}」
-                        </span>
-                    </p>
-                );
-
+                mainMessage = `加入了你的活動「${notification.activity}」`;
+                break;
             case 'reminder':
-                return (
-                    <p>
-                        小提醒 🌤️
-                        <span className="text-white block mt-1">
-                            「{notification.activity}」{notification.time}
-                        </span>
-                    </p>
-                );
-
+                mainMessage = `你的活動「${notification.activity}」有新的提醒：\n${notification.message}！`;
+                break;
             case 'feedback':
-                return (
-                    <p>
-                        在「{notification.activity}」中，有人給了你一個回饋
-                        <span className="text-white block mt-1">
-                            {notification.message}
-                        </span>
-                    </p>
-                );
-
+                mainMessage = `在「${notification.activity}」中，有人給了你一個回饋：\n${notification.message}`;
+                break;
+            case 'system':
+                mainMessage = `${notification.message}`;
+                break;
             default:
-                return (
-                    <p className="text-white">
-                        {notification.message}
-                    </p>
-                );
+                mainMessage = notification.message || '';
         }
+
+        return (
+            <div className="flex items-start space-x-3">
+                <Avatar className="h-8 w-8">
+                    <AvatarImage src={userAvatar} alt={userDisplay} />
+                    <AvatarFallback>{userDisplay.slice(0, 2)}</AvatarFallback>
+                </Avatar>
+                <div className="flex-1">
+                    <p className="text-sm font-semibold text-white">
+                        {userDisplay}
+                        <span className="ml-2 text-xs text-gray-400 font-normal">{notification.time}</span>
+                    </p>
+                    <p className="text-sm text-gray-300 mt-1">{mainMessage}</p>
+                </div>
+                {!notification.read && (
+                    <Badge variant="default" className="absolute h-2 w-2 top-2 right-2 z-10 bg-blue-600 rounded-full p-0 flex items-center justify-center" />
+                )}
+            </div>
+        );
     };
 
 
@@ -216,7 +210,7 @@ export default function NotificationsPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
             >
-                <div className="flex justify-between mb-6">
+                <div className="flex justify-between items-center mb-6">
                     <div>
                         <h1 className="text-4xl md:text-5xl font-extrabold drop-shadow-md">
                             通知
@@ -233,26 +227,12 @@ export default function NotificationsPage() {
                         <Card
                             key={notification.id}
                             className={clsx(
-                                "bg-white/5 backdrop-blur-md border rounded-2xl shadow-xl p-4 flex items-start gap-4 cursor-pointer transition-colors hover:bg-white/10",
+                                "bg-white/5 backdrop-blur-md border rounded-2xl shadow-xl p-4 cursor-pointer transition-colors hover:bg-white/10",
                                 !notification.read ? "border-blue-500/30" : "border-white/10"
                             )}
                             onClick={() => markAsRead(notification.id)}
                         >
-                            {!notification.read && <Badge variant="default" className="absolute top-2 right-2 z-10 bg-blue-500 text-white">New</Badge>}
-                            <div className='flex items-start space-x-3'>
-                                <Avatar className="w-8 h-8">
-                                    <AvatarImage src={notification.avatar} />
-                                    <AvatarFallback>{notification.user ? notification.user.slice(0, 2) : "!"}</AvatarFallback>
-                                </Avatar>
-
-                                <div className="flex-1">
-                                    <div className="text-sm text-gray-400">
-                                        <span className="font-semibold text-white">{notification.user || "系統通知"}</span>
-                                        <NotificationText notification={notification} />
-                                    </div>
-                                    <p className="text-xs text-gray-500 mt-2">{notification.time}</p>
-                                </div>
-                            </div>
+                            <NotificationContent notification={notification} />
                         </Card>
                     ))}
                 </div>
