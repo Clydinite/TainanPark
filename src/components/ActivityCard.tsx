@@ -163,14 +163,14 @@ export function ActivityDetails({ activity, stepper, renderAction }: { activity:
           </div>
         </div>
 
-        <div className="border-t border-dashed border-white/20 pt-4 space-y-4">
-          {stepper && (
+        {stepper && (
+          <div className="border-t border-dashed border-white/20 pt-4 space-y-4">
             <div>
               <h3 className="text-white/80 text-lg font-semibold">審核狀態</h3>
               <div className="my-10">{stepper}</div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
 
         <div className="border-t border-dashed border-white/20 pt-4 space-y-4">
           <h3 className="text-white/80 text-lg font-semibold">留言區</h3>
