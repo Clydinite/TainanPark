@@ -6,18 +6,37 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import type { Activity } from "@/types/global";
-import { socialLevelDescriptions } from "@/lib/shared";
-import { MapPinIcon, CalendarIcon, SquareActivityIcon, MessageCircle, SendHorizontal } from "lucide-react"; // Import for comment icon
+import { socialLevelDescriptions, verificationStatusTranslations } from "@/lib/shared";
+import { MapPinIcon, CalendarIcon, SquareActivityIcon, MessageCircle, SendHorizontal } from "lucide-react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Input } from "./ui/input";
+import { Badge } from "./ui/badge";
 
-export function ActivityCard({ activity }: { activity: Activity }) {
+export function ActivityCard(
+  {
+    activity,
+    showStatus,
+    stepper,
+    renderAction
+  }: {
+    activity: Activity,
+    showStatus?: boolean,
+    stepper?: React.ReactNode
+    renderAction?: React.ReactNode
+  }) {
   const scheduleDate = new Date(activity.schedule.date);
   const formattedDate = `${scheduleDate.getMonth() + 1
     }月${scheduleDate.getDate()}日`;
 
+  const statusVariantColor = {
+    verified: "bg-green-600",
+    pending: "bg-yellow-600",
+    reviewing: "bg-blue-600",
+  } as const;
+
   return (
-    <Card className="group transition-transform overflow-hidden border border-white/10 bg-white/5 backdrop-blur-md rounded-2xl shadow-xl flex flex-col h-full py-0 gap-2">
+    <Card className="group relative transition-transform overflow-hidden border border-white/10 bg-white/5 backdrop-blur-md rounded-2xl shadow-xl flex flex-col h-full py-0 gap-2">
+      {showStatus && <Badge variant="default" className={"absolute top-2 right-2 z-10" + " " + statusVariantColor[activity.verificationStatus]} >{verificationStatusTranslations[activity.verificationStatus]}</Badge>}
       <img
         src={activity.images[0]}
         alt={activity.name}
@@ -58,8 +77,7 @@ export function ActivityCard({ activity }: { activity: Activity }) {
             </span>
           ))}
         </div>
-        
-        {/* New Footer Section */}
+
         <div className="flex-grow" />
         <div className="border-t border-white/10 mt-2 pt-4 flex justify-between items-center">
           <div className="flex items-center text-sm text-gray-400">
@@ -72,14 +90,14 @@ export function ActivityCard({ activity }: { activity: Activity }) {
               <span className="text-gray-500">尚無留言</span>
             )}
           </div>
-          <ActivityDetails activity={activity} />
+          <ActivityDetails activity={activity} stepper={stepper} renderAction={renderAction} />
         </div>
       </CardContent>
     </Card>
   );
 }
 
-export function ActivityDetails({ activity }: { activity: Activity }) {
+export function ActivityDetails({ activity, stepper, renderAction }: { activity: Activity, stepper?: React.ReactNode, renderAction?: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const [newComment, setNewComment] = useState("");
   const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -105,8 +123,7 @@ export function ActivityDetails({ activity }: { activity: Activity }) {
       <img
         src={activity.images[0]}
         alt={activity.name}
-        className={`rounded-xl shadow-inner object-cover ${isDesktop ? "w-60 h-96" : "w-full h-64"
-          }`}
+        className={`rounded-xl shadow-inner object-cover ${isDesktop ? "w-60 h-96" : "w-full h-64"}`}
       />
 
       <div className="flex-1 space-y-4">
@@ -147,7 +164,16 @@ export function ActivityDetails({ activity }: { activity: Activity }) {
         </div>
 
         <div className="border-t border-dashed border-white/20 pt-4 space-y-4">
-          <h3 className="text-white/80 text-lg font-semibold">留言區 ({activity.comments?.length || 0})</h3>
+          {stepper && (
+            <div>
+              <h3 className="text-white/80 text-lg font-semibold">審核狀態</h3>
+              <div className="my-10">{stepper}</div>
+            </div>
+          )}
+        </div>
+
+        <div className="border-t border-dashed border-white/20 pt-4 space-y-4">
+          <h3 className="text-white/80 text-lg font-semibold">留言區</h3>
           {activity.comments && activity.comments.length > 0 && (
             <div className="space-y-3 max-h-40 overflow-y-auto pr-2">
               {activity.comments.map((comment, index) => (
@@ -158,10 +184,10 @@ export function ActivityDetails({ activity }: { activity: Activity }) {
                   </Avatar>
                   <div>
                     <p className="text-sm font-semibold text-white">
-                        {comment.handle}
-                        {comment.handle === activity.host.nickname && (
-                            <span className="ml-2 text-xs text-blue-300">(主揪)</span>
-                        )}
+                      {comment.handle}
+                      {comment.handle === activity.host.nickname && (
+                        <span className="ml-2 text-xs text-blue-300">(主揪)</span>
+                      )}
                     </p>
                     <p className="text-sm text-gray-300">{comment.text}</p>
                   </div>
@@ -170,27 +196,29 @@ export function ActivityDetails({ activity }: { activity: Activity }) {
             </div>
           )}
           <div className="flex items-center gap-2">
-            <Input 
+            <Input
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
               placeholder="分享你的想法..."
               onKeyPress={(e) => e.key === 'Enter' && handleSendComment()}
             />
             <Button size="icon" variant="ghost" onClick={handleSendComment}>
-              <SendHorizontal className="h-5 w-5"/>
+              <SendHorizontal className="h-5 w-5" />
             </Button>
           </div>
         </div>
 
-        <Button
-          variant="default"
-          className="w-full mt-4 mb-10"
-          onClick={() => {
-            alert("This is a demo. Participation functionality is not implemented yet.");
-          }}
-        >
-          我要參加！
-        </Button>
+        {renderAction ? renderAction : (
+          <Button
+            variant="default"
+            className="w-full mt-4 mb-10"
+            onClick={() => {
+              alert("This is a demo. Participation functionality is not implemented yet.");
+            }}
+          >
+            我要參加！
+          </Button>
+        )}
       </div>
     </div>
   );
@@ -206,11 +234,11 @@ export function ActivityDetails({ activity }: { activity: Activity }) {
     );
   } else {
     return (
-      // this fixed the issue of drawer not being scrollable on mobile
+      // the ScrollArea fixed the issue of drawer not being scrollable on mobile
       <Drawer open={open} onOpenChange={setOpen}>
         <DrawerTrigger asChild>{trigger}</DrawerTrigger>
         <DrawerContent className="p-0 max-h-[90dvh]">
-          <ScrollArea className="overflow-y-auto">
+          <ScrollArea className="overflow-y-auto p-2">
             {content}
           </ScrollArea>
         </DrawerContent>
