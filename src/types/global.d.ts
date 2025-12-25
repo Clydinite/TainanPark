@@ -92,6 +92,11 @@ export type Activity = {
   description: string;
 
   /**
+   * 活動狀態
+   */
+  verificationStatus: "verified" | "pending" | "reviewing";
+
+  /**
    * 留言區
    */
   comments?: Comment[];
