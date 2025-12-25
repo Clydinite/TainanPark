@@ -27,7 +27,7 @@ export default function SafetyPage() {
           </h3>
           <div className="aspect-video bg-gray-800 rounded-lg flex items-center justify-center text-gray-500">
             {/* Mock Map */}
-            <p>地圖載入中... (模擬安全區域、緊急電話、洗手間)</p>
+            <p>地圖載入中...</p>
           </div>
           <div className="space-y-2 text-sm text-gray-300">
             <ul className="list-disc list-inside space-y-2 text-sm text-gray-300">
@@ -65,8 +65,7 @@ export default function SafetyPage() {
             <Clock className="w-5 h-5" /> 公園開放時間與規則
           </h3>
           <ul className="list-disc list-inside space-y-2 text-sm text-gray-300">
-            <li>開放時間：每日 05:00 - 22:00 (部分區域可能因維護而調整)</li>
-            <li>照明時間：日落後至 22:30</li>
+            <li>開放時間：每日 08:00 - 20:00 (部分區域可能因維護而調整)</li>
             <li>禁止餵食野生動物。</li>
             <li>禁止隨地丟棄垃圾，共同維護環境整潔。</li>
           </ul>
